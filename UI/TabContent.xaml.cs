@@ -17,7 +17,7 @@ namespace Import_Biller.UI
         private async void Office2013Button_Click(object sender, RoutedEventArgs e)
         {
             var path = pathTextbox.Text;
-            var import = new Biller.Data.Import.BillerV1.Import(path, (DataContext as EntryPoint).ParentViewModel.Database);
+            var import = new Biller.Core.Import.BillerV1.Import(path, (DataContext as EntryPoint).ParentViewModel.Database);
             progressring.IsActive = true;
             await import.ImportEverything();
             DocumentsToChangeList.ItemsSource = import.DocumentsToModify;

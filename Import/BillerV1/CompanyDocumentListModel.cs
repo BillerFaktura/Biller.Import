@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Biller.Data.Import.BillerV1
+namespace Biller.Core.Import.BillerV1
 {
     public class CompanyDocumentListModel
     {

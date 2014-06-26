@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Biller.Data.Import.BillerV1
+namespace Biller.Core.Import.BillerV1
 {
     public class Import
     {
@@ -86,7 +86,7 @@ namespace Biller.Data.Import.BillerV1
             var savingList = new List<Customers.Customer>();
             foreach (var cusprev in list)
             {
-                var importedCustomer = new Data.Customers.Customer();
+                var importedCustomer = new Core.Customers.Customer();
 
                 //Load full user
                 var customer = bdb.GetCustomer(cusprev.CustomerID, user);
