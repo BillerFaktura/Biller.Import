@@ -61,7 +61,7 @@ namespace Biller.Core.Import.BillerV1
                 companySettings.TaxID = company.TaxID;
 
                 companySettings.MainAddress.Addition = company.ToAddress().Addition;
-                companySettings.MainAddress.Forname = company.ToAddress().Forname;
+                companySettings.MainAddress.Forename = company.ToAddress().Forname;
                 companySettings.MainAddress.Surname = company.ToAddress().Surname;
                 companySettings.MainAddress.Title = company.ToAddress().Title;
                 companySettings.MainAddress.Salutation = company.ToAddress().Salutation;
@@ -125,7 +125,7 @@ namespace Biller.Core.Import.BillerV1
                 MainAddress.City = customer.Address.City;
                 MainAddress.CompanyName = customer.Address.CompanyName;
                 MainAddress.Country = customer.Address.Country;
-                MainAddress.Forname = customer.Address.Forname;
+                MainAddress.Forename = customer.Address.Forname;
                 MainAddress.Surname = customer.Address.Surname;
                 MainAddress.Title = customer.Address.Title;
                 MainAddress.Zip = customer.Address.ZipCode;
@@ -157,7 +157,7 @@ namespace Biller.Core.Import.BillerV1
                     eAddress.City = address.City;
                     eAddress.CompanyName = address.CompanyName;
                     eAddress.Country = address.Country;
-                    eAddress.Forname = address.Forname;
+                    eAddress.Forename = address.Forname;
                     eAddress.Surname = address.Surname;
                     eAddress.Title = address.Title;
                     eAddress.Zip = address.ZipCode;
