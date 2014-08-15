@@ -71,6 +71,8 @@ namespace Biller.Core.Import.BillerV1
                 companySettings.MainAddress.City = company.ToAddress().City;
                 companySettings.MainAddress.Country = company.ToAddress().Country;
                 await Database.SaveOrUpdateStorageableItem(companySettings);
+                dynamic kvs = new Utils.KeyValueStore();
+                await Database.SaveOrUpdateSettings(kvs);
             }
             return true;
         }

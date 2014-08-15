@@ -33,7 +33,7 @@
             <Run Text="Tragen Sie im unteren Textfeld den Pfad zu den Daten ein. Normalerweise setzt sich dieser aus dem Installationsverzeichnis + dem Unterordner &quot;Firma&quot; zusammen."/>
         </TextBlock>
         <controls:WatermarkTextBox Watermark="Doppelklicken zum Ändern" MouseDoubleClick="WatermarkTextBox_MouseDoubleClick" Name="pathTextbox"/>
-        <controls:Office2013Button Content="Daten importieren" Click="Office2013Button_Click" Height="100" Width="150" HorizontalAlignment="Left"/>
+        <controls:Office2013Button Content="Daten importieren" Click="Office2013Button_Click" Height="100" Width="150" HorizontalAlignment="Left" Margin="1,0,0,0"/>
         <metro:ProgressRing HorizontalAlignment="Left" Name="progressring"/>
         <ItemsControl Name="DocumentsToChangeList">
             <ItemsControl.ItemTemplate>
