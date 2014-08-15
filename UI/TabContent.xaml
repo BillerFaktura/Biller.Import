@@ -30,7 +30,7 @@
         <TextBlock Style="{StaticResource ContentStyle}" TextWrapping="WrapWithOverflow">
             <Run Text="Importieren Sie Daten aus einer früheren Version von Biller."/>
             <LineBreak/>
-            <Run Text="Tragen Sie im unteren Textfeld den Pfad zu den Daten ein. Normalerweise setzt sich dieser aus dem Installationsverzeichnis + dem Unterordner &quot;Firma&quot; zusammen."/>
+            <Run Text="Tragen Sie im unteren Textfeld den Pfad zu den Daten ein. Dieser ist in der Regel der Installtionspfad des Programms."/>
         </TextBlock>
         <controls:WatermarkTextBox Watermark="Doppelklicken zum Ändern" MouseDoubleClick="WatermarkTextBox_MouseDoubleClick" Name="pathTextbox"/>
         <controls:Office2013Button Content="Daten importieren" Click="Office2013Button_Click" Height="100" Width="150" HorizontalAlignment="Left" Margin="1,0,0,0"/>

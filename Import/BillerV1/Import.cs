@@ -60,6 +60,7 @@ namespace Biller.Core.Import.BillerV1
                 companySettings.SalesTaxID = company.TradeID;
                 companySettings.TaxID = company.TaxID;
 
+                companySettings.MainAddress.CompanyName = company.CompanyName;
                 companySettings.MainAddress.Addition = company.ToAddress().Addition;
                 companySettings.MainAddress.Forename = company.ToAddress().Forname;
                 companySettings.MainAddress.Surname = company.ToAddress().Surname;
@@ -70,9 +71,8 @@ namespace Biller.Core.Import.BillerV1
                 companySettings.MainAddress.Zip = company.ToAddress().ZipCode;
                 companySettings.MainAddress.City = company.ToAddress().City;
                 companySettings.MainAddress.Country = company.ToAddress().Country;
-                await Database.SaveOrUpdateStorageableItem(companySettings);
-                dynamic kvs = new Utils.KeyValueStore();
-                await Database.SaveOrUpdateSettings(kvs);
+                Database.SaveOrUpdateStorageableItem(companySettings);
+                Database.SaveOrUpdateSettings(new Utils.KeyValueStore());
             }
             return true;
         }
