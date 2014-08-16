@@ -24,6 +24,7 @@ namespace Biller.Core.Import.BillerV1
 
         public async Task<bool> ImportEverything()
         {
+            var previousCompany = Database.CurrentCompany;
             await ImportCompanies();
             foreach (var company in bdb.GetAllCompanys())
             {
@@ -34,6 +35,7 @@ namespace Biller.Core.Import.BillerV1
                 await ImportCustomers();
                 await ImportDocuments();
             }
+            await Database.ChangeCompany(previousCompany);
             return await Task<bool>.Run(() => { return true; });
         }
 
@@ -71,7 +73,7 @@ namespace Biller.Core.Import.BillerV1
                 companySettings.MainAddress.Zip = company.ToAddress().ZipCode;
                 companySettings.MainAddress.City = company.ToAddress().City;
                 companySettings.MainAddress.Country = company.ToAddress().Country;
-                Database.SaveOrUpdateStorageableItem(companySettings);
+                await Database.SaveOrUpdateStorageableItem(companySettings);
                 Database.SaveOrUpdateSettings(new Utils.KeyValueStore());
             }
             return true;
