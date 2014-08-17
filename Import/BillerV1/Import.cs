@@ -24,17 +24,27 @@ namespace Biller.Core.Import.BillerV1
 
         public async Task<bool> ImportEverything()
         {
-            await ImportCompanies();
-            foreach (var company in bdb.GetAllCompanys())
+            var previousCompany = Database.CurrentCompany;
+            try
             {
-                bdb.LastCompany = company.CompanyName;
-                bdb = new FuncClasses.FastXML(DataDirectory);
-                bdb.Connect();
-                await ImportArticle();
-                await ImportCustomers();
-                await ImportDocuments();
+                await ImportCompanies();
+                foreach (var company in bdb.GetAllCompanys())
+                {
+                    bdb.LastCompany = company.CompanyName;
+                    bdb = new FuncClasses.FastXML(DataDirectory);
+                    bdb.Connect();
+                    await ImportArticle();
+                    await ImportCustomers();
+                    await ImportDocuments();
+                }
+                await Database.ChangeCompany(previousCompany);
+                return await Task<bool>.Run(() => { return true; });
             }
-            return await Task<bool>.Run(() => { return true; });
+            catch(Exception e)
+            {
+                Biller.UI.ViewModel.MainWindowViewModel.GetCurrentMainWindowViewModel().NotificationManager.ShowNotification("Fehler beim Importieren", "Der Importvorgang konnte nicht abgeschlossen werden. Möglicherweise wurden einige Daten trotzdem importiert.");
+            }
+            return await Task<bool>.Run(() => { return false; });
         }
 
         public string DataDirectory { get; set; }
@@ -60,8 +70,9 @@ namespace Biller.Core.Import.BillerV1
                 companySettings.SalesTaxID = company.TradeID;
                 companySettings.TaxID = company.TaxID;
 
+                companySettings.MainAddress.CompanyName = company.CompanyName;
                 companySettings.MainAddress.Addition = company.ToAddress().Addition;
-                companySettings.MainAddress.Forname = company.ToAddress().Forname;
+                companySettings.MainAddress.Forename = company.ToAddress().Forname;
                 companySettings.MainAddress.Surname = company.ToAddress().Surname;
                 companySettings.MainAddress.Title = company.ToAddress().Title;
                 companySettings.MainAddress.Salutation = company.ToAddress().Salutation;
@@ -71,6 +82,7 @@ namespace Biller.Core.Import.BillerV1
                 companySettings.MainAddress.City = company.ToAddress().City;
                 companySettings.MainAddress.Country = company.ToAddress().Country;
                 await Database.SaveOrUpdateStorageableItem(companySettings);
+                Database.SaveOrUpdateSettings(new Utils.KeyValueStore());
             }
             return true;
         }
@@ -125,7 +137,7 @@ namespace Biller.Core.Import.BillerV1
                 MainAddress.City = customer.Address.City;
                 MainAddress.CompanyName = customer.Address.CompanyName;
                 MainAddress.Country = customer.Address.Country;
-                MainAddress.Forname = customer.Address.Forname;
+                MainAddress.Forename = customer.Address.Forname;
                 MainAddress.Surname = customer.Address.Surname;
                 MainAddress.Title = customer.Address.Title;
                 MainAddress.Zip = customer.Address.ZipCode;
@@ -157,7 +169,7 @@ namespace Biller.Core.Import.BillerV1
                     eAddress.City = address.City;
                     eAddress.CompanyName = address.CompanyName;
                     eAddress.Country = address.Country;
-                    eAddress.Forname = address.Forname;
+                    eAddress.Forename = address.Forname;
                     eAddress.Surname = address.Surname;
                     eAddress.Title = address.Title;
                     eAddress.Zip = address.ZipCode;
