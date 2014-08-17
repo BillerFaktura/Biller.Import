@@ -25,18 +25,26 @@ namespace Biller.Core.Import.BillerV1
         public async Task<bool> ImportEverything()
         {
             var previousCompany = Database.CurrentCompany;
-            await ImportCompanies();
-            foreach (var company in bdb.GetAllCompanys())
+            try
             {
-                bdb.LastCompany = company.CompanyName;
-                bdb = new FuncClasses.FastXML(DataDirectory);
-                bdb.Connect();
-                await ImportArticle();
-                await ImportCustomers();
-                await ImportDocuments();
+                await ImportCompanies();
+                foreach (var company in bdb.GetAllCompanys())
+                {
+                    bdb.LastCompany = company.CompanyName;
+                    bdb = new FuncClasses.FastXML(DataDirectory);
+                    bdb.Connect();
+                    await ImportArticle();
+                    await ImportCustomers();
+                    await ImportDocuments();
+                }
+                await Database.ChangeCompany(previousCompany);
+                return await Task<bool>.Run(() => { return true; });
             }
-            await Database.ChangeCompany(previousCompany);
-            return await Task<bool>.Run(() => { return true; });
+            catch(Exception e)
+            {
+                Biller.UI.ViewModel.MainWindowViewModel.GetCurrentMainWindowViewModel().NotificationManager.ShowNotification("Fehler beim Importieren", "Der Importvorgang konnte nicht abgeschlossen werden. Möglicherweise wurden einige Daten trotzdem importiert.");
+            }
+            return await Task<bool>.Run(() => { return false; });
         }
 
         public string DataDirectory { get; set; }
