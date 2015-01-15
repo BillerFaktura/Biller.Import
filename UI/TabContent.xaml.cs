@@ -37,5 +37,14 @@ namespace Import_Biller.UI
         {
 
         }
+
+        private async void Office2013Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            var path = pathTextbox.Text;
+            var import = new Import.CSV.Import(path, (DataContext as EntryPoint).ParentViewModel.Database);
+            progressring.IsActive = true;
+            await import.ImportArticle();
+            progressring.IsActive = false;
+        }
     }
 }

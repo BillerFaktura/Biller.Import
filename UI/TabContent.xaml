@@ -34,6 +34,7 @@
         </TextBlock>
         <controls:WatermarkTextBox Watermark="Doppelklicken zum Ändern" MouseDoubleClick="WatermarkTextBox_MouseDoubleClick" Name="pathTextbox"/>
         <controls:Office2013Button Content="Daten importieren" Click="Office2013Button_Click" Height="100" Width="150" HorizontalAlignment="Left" Margin="1,0,0,0"/>
+        <controls:Office2013Button Content="Daten importieren" Click="Office2013Button_Click_1" Height="100" Width="150" HorizontalAlignment="Left" Margin="1,0,0,0"/>
         <metro:ProgressRing Name="progressring"/>
         <ItemsControl Name="DocumentsToChangeList">
             <ItemsControl.ItemTemplate>
